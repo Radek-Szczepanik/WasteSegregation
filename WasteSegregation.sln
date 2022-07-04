@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32611.2
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WasteSegregation", "WasteSegregation\WasteSegregation.csproj", "{36A2464E-612C-474D-AFC2-C7224E885EE9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WasteSegregation.DataAccess", "WasteSegregation.DataAccess\WasteSegregation.DataAccess.csproj", "{FC340B89-4A32-4E83-8D15-F1ECF1098432}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{36A2464E-612C-474D-AFC2-C7224E885EE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36A2464E-612C-474D-AFC2-C7224E885EE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36A2464E-612C-474D-AFC2-C7224E885EE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC340B89-4A32-4E83-8D15-F1ECF1098432}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC340B89-4A32-4E83-8D15-F1ECF1098432}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC340B89-4A32-4E83-8D15-F1ECF1098432}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC340B89-4A32-4E83-8D15-F1ECF1098432}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
