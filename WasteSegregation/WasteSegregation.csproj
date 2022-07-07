@@ -24,4 +24,8 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WasteSegregation.DataAccess\WasteSegregation.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>
