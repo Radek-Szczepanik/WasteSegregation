@@ -1,9 +1,14 @@
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+ConfigurationManager configuration = builder.Configuration;
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+builder.Services.AddDbContext<WasteSegregationDbContext>(options =>
+    options.UseSqlServer(configuration.GetConnectionString("WasteSegregationDbConnection"),
+    x => x.MigrationsAssembly("WasteSegregation.WebAPI")));
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
