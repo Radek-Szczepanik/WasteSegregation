@@ -4,3 +4,4 @@ global using Microsoft.Extensions.Hosting;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.Configuration;
 global using WasteSegregation.Infrastructure.Data;
+global using WasteSegregation.Infrastructure.SeedData;
