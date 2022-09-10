@@ -7,5 +7,7 @@ public class RealEstateMappingProfile : Profile
 		CreateMap<RealEstate, RealEstateDto>();
 
 		CreateMap<RealEstateWaste, RealEstateWasteDto>();
+
+		CreateMap<CreateRealEstateDto, RealEstate>();
 	}
 }
