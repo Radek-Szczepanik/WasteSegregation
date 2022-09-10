@@ -22,10 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\WasteSegregation.Application\WasteSegregation.Application.csproj" />
     <ProjectReference Include="..\WasteSegregation.Infrastructure\WasteSegregation.Infrastructure.csproj" />
   </ItemGroup>
