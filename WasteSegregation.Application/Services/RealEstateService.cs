@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace WasteSegregation.Application.Services;
+﻿namespace WasteSegregation.Application.Services;
 
 public class RealEstateService : IRealEstateService
 {
@@ -34,13 +32,16 @@ public class RealEstateService : IRealEstateService
         return mapper.Map<RealEstateDto>(result);
     }
 
-    public Task UpdateAsync(UpdateRealEstateDto updateRealEstate)
+    public async Task UpdateAsync(UpdateRealEstateDto updateRealEstate, int id)
     {
-        throw new NotImplementedException();
+        var existingRealEstate = await realEstateRepository.GetByIdAsync(id);
+        var realEstate = mapper.Map(updateRealEstate, existingRealEstate);
+        await realEstateRepository.UpdateAsync(realEstate);
     }
 
-    public Task DeleteAsync(int id)
+    public async Task DeleteAsync(int id)
     {
-        throw new NotImplementedException();
+        var realEstate = await realEstateRepository.GetByIdAsync(id);
+        await realEstateRepository.DeleteAsync(realEstate);
     }
 }

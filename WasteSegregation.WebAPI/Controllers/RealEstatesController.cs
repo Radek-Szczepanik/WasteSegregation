@@ -32,4 +32,20 @@ public class RealEstatesController : ControllerBase
 		var newRealEstate = await realEstateService.AddAsync(createRealEstateDto);
 		return Created($"api/realEstates/{newRealEstate.Id}", null);
 	}
+
+    [HttpPut]
+	[Route("{id}")]
+	public async Task<IActionResult> Update([FromBody] UpdateRealEstateDto updateRealEstateDto, [FromRoute] int id)
+	{
+		await realEstateService.UpdateAsync(updateRealEstateDto, id);
+		return NoContent();
+	}
+
+    [HttpDelete]
+	[Route("{id}")]
+	public async Task<IActionResult> Delete([FromRoute] int id)
+	{
+		await realEstateService.DeleteAsync(id);
+		return NoContent();
+	}
 }
