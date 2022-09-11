@@ -4,7 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 ConfigurationManager configuration = builder.Configuration;
 
-builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+builder.Services.AddSingleton(MappingsProfile.Initialize());
 
 builder.Services.AddControllers();
 
@@ -13,6 +13,10 @@ builder.Services.AddScoped<WasteSegregationSeeder>();
 builder.Services.AddDbContext<WasteSegregationDbContext>(options =>
     options.UseSqlServer(configuration.GetConnectionString("WasteSegregationDbConnection"),
     x => x.MigrationsAssembly("WasteSegregation.WebAPI")));
+
+builder.Services.AddScoped<IRealEstateService, RealEstateService>();
+
+builder.Services.AddScoped<IRealEstateRepository, RealEstateRepository>();
 
 builder.Services.AddEndpointsApiExplorer();
 
