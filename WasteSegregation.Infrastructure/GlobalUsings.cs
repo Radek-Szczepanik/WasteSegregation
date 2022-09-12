@@ -5,3 +5,4 @@ global using System.Linq;
 global using WasteSegregation.Infrastructure.Data;
 global using System.Threading.Tasks;
 global using WasteSegregation.Domain.Interfaces;
+global using WasteSegregation.Domain.Common;
