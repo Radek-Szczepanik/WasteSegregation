@@ -6,3 +6,4 @@ global using WasteSegregation.Domain.Entities;
 global using System.Threading.Tasks;
 global using WasteSegregation.Application.Interfaces;
 global using WasteSegregation.Domain.Interfaces;
+global using Microsoft.Extensions.Logging;

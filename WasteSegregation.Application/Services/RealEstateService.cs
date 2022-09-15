@@ -4,15 +4,18 @@ public class RealEstateService : IRealEstateService
 {
     private readonly IRealEstateRepository realEstateRepository;
     private readonly IMapper mapper;
+    private readonly ILogger<RealEstateService> logger;
 
-    public RealEstateService(IRealEstateRepository realEstateRepository, IMapper mapper)
+    public RealEstateService(IRealEstateRepository realEstateRepository, IMapper mapper, ILogger<RealEstateService> logger)
     {
         this.realEstateRepository = realEstateRepository;
         this.mapper = mapper;
+        this.logger = logger;
     }
 
     public async Task<IEnumerable<RealEstateDto>> GetAllAsync()
     {
+        logger.LogInformation("Get all real estates");
         var realEstate = await realEstateRepository.GetAllAsync();
         if (realEstate == null) return null;
         return mapper.Map<List<RealEstateDto>>(realEstate);
@@ -41,6 +44,7 @@ public class RealEstateService : IRealEstateService
 
     public async Task DeleteAsync(int id)
     {
+        logger.LogError($"Error when delete real estate with id: {id}");
         var realEstate = await realEstateRepository.GetByIdAsync(id);
         await realEstateRepository.DeleteAsync(realEstate);
     }
