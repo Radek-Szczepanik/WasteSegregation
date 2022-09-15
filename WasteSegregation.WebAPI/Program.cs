@@ -1,5 +1,3 @@
-using Microsoft.Extensions.Logging;
-
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
 
@@ -28,6 +26,8 @@ try
 
     builder.Services.AddScoped<IRealEstateRepository, RealEstateRepository>();
 
+    builder.Services.AddScoped<ErrorHandlingMiddleware>();
+
     builder.Services.AddEndpointsApiExplorer();
 
     builder.Services.AddSwaggerGen();
@@ -45,6 +45,7 @@ try
         app.UseSwagger();
         app.UseSwaggerUI();
     }
+    app.UseMiddleware<ErrorHandlingMiddleware>();
 
     app.UseHttpsRedirection();
 

@@ -16,3 +16,7 @@ global using WasteSegregation.Domain.Interfaces;
 global using WasteSegregation.Infrastructure.Data;
 global using WasteSegregation.Infrastructure.Repositories;
 global using WasteSegregation.Infrastructure.SeedData;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.Extensions.Logging;
+global using WasteSegregation.WebAPI.Middleware;
+global using WasteSegregation.Application.Exceptions;
