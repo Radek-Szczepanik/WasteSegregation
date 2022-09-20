@@ -12,13 +12,13 @@ public class RealEstateRepository : IRealEstateRepository
     public async Task<IEnumerable<RealEstate>> GetAllAsync()
         => await dbContext
             .RealEstates
-            .Include(x => x.RealEstateWastes)
+            .Include(x => x.WasteBags)
             .ToListAsync();
          
     public async Task<RealEstate> GetByIdAsync(int id)
         => await dbContext
             .RealEstates
-            .Include(x => x.RealEstateWastes)
+            .Include(x => x.WasteBags)
             .FirstOrDefaultAsync(x => x.Id == id);
 
     public async Task<RealEstate> AddAsync(RealEstate realEstate)

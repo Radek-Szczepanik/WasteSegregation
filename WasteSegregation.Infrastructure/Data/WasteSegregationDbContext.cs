@@ -7,7 +7,7 @@ public class WasteSegregationDbContext : DbContext
 	}
 
 	public DbSet<RealEstate> RealEstates { get; set; }
-	public DbSet<RealEstateWaste> RealEstateWastes { get; set; }
+	public DbSet<WasteBag> WasteBags { get; set; }
 
 	public async Task<int> SaveChangesAsync()
 	{

@@ -32,9 +32,9 @@ public class WasteSegregationSeeder
                 StreetNumber = "12a",
                 PostCode = "21-336",
                 City = "Warszawa",
-                RealEstateWastes = new List<RealEstateWaste>()
+                WasteBags = new List<WasteBag>()
                 {
-                    new RealEstateWaste()
+                    new WasteBag()
                     {
                         BlueBag = 1,
                         GreenBag = 1,
@@ -49,9 +49,9 @@ public class WasteSegregationSeeder
                 StreetNumber = "21/8",
                 PostCode = "05-991",
                 City = "Poznań",
-                RealEstateWastes = new List<RealEstateWaste>()
+                WasteBags = new List<WasteBag>()
                 {
-                    new RealEstateWaste()
+                    new WasteBag()
                     {
                         BlueBag = 2,
                         GreenBag = 2,
@@ -66,9 +66,9 @@ public class WasteSegregationSeeder
                 StreetNumber = "47c",
                 PostCode = "12-136",
                 City = "Kraków",
-                RealEstateWastes = new List<RealEstateWaste>()
+                WasteBags = new List<WasteBag>()
                 {
-                    new RealEstateWaste()
+                    new WasteBag()
                     {
                         BlueBag = 2,
                         GreenBag = 1,

@@ -20,7 +20,7 @@ public class RealEstateConfiguration : IEntityTypeConfiguration<RealEstate>
                .IsRequired()
                .HasMaxLength(20);
 
-        builder.HasMany(x => x.RealEstateWastes)
+        builder.HasMany(x => x.WasteBags)
                .WithOne(y => y.RealEstate)
                .HasForeignKey(z => z.RealEstateId);
     }

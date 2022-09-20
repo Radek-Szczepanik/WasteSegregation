@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
 
@@ -11,7 +13,8 @@ try
 
     builder.Services.AddSingleton(MappingsProfile.Initialize());
 
-    builder.Services.AddControllers();
+    builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
@@ -25,6 +28,10 @@ try
     builder.Services.AddScoped<IRealEstateService, RealEstateService>();
 
     builder.Services.AddScoped<IRealEstateRepository, RealEstateRepository>();
+
+    builder.Services.AddScoped<IWasteBagsService, WasteBagsService>();
+
+    builder.Services.AddScoped<IWasteBagsRepository, WasteBagsRepository>();
 
     builder.Services.AddScoped<ErrorHandlingMiddleware>();
 

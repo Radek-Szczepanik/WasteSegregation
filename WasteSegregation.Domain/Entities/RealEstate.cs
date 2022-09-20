@@ -8,5 +8,5 @@ public class RealEstate : AuditableEntity
     public string PostCode { get; set; }
     public string City { get; set; }
 
-    public List<RealEstateWaste> RealEstateWastes { get; set; }
+    public virtual List<WasteBag> WasteBags { get; set; }
 }

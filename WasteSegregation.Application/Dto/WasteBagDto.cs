@@ -1,6 +1,6 @@
 ﻿namespace WasteSegregation.Application.Dto;
 
-public class RealEstateWasteDto
+public class WasteBagDto
 {
     public int Id { get; set; }
     public byte? BlueBag { get; set; }

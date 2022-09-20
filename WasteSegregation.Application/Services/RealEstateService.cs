@@ -14,7 +14,7 @@ public class RealEstateService : IRealEstateService
     public async Task<IEnumerable<RealEstateDto>> GetAllAsync()
     {
         var realEstate = await realEstateRepository.GetAllAsync();
-        if (realEstate == null) throw new NotFoundException("Real estate not found");
+        if (realEstate == null) throw new NotFoundException("Real estates not found");
         return mapper.Map<List<RealEstateDto>>(realEstate);
     }
 

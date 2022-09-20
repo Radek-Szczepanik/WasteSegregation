@@ -7,6 +7,6 @@ public class RealEstateDto
     public string StreetNumber { get; set; }
     public string PostCode { get; set; }
     public string City { get; set; }
-
-    public List<RealEstateWasteDto> wasteDtos { get; set; }
+    
+    public List<WasteBagDto> wasteBags { get; set; } = new List<WasteBagDto>();
 }
