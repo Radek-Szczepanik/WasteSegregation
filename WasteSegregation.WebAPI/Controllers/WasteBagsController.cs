@@ -4,17 +4,17 @@
 [Route("api/realEstate/{realEstateId}/wasteBags")]
 public class WasteBagsController : ControllerBase
 {
-    private readonly IWasteBagsService wasteService;
+    private readonly IWasteBagsService wasteBagsService;
 
-    public WasteBagsController(IWasteBagsService wasteService)
+    public WasteBagsController(IWasteBagsService wasteBagsService)
     {
-        this.wasteService = wasteService;
+        this.wasteBagsService = wasteBagsService;
     }
 
     [HttpPost]
     public async Task<IActionResult> Create([FromRoute] int realEstateId, [FromBody] CreateWasteBagsDto createWasteBagsDto)
     {
-        var newWasteBags = await wasteService.AddAsync(realEstateId, createWasteBagsDto);
+        var newWasteBags = await wasteBagsService.AddAsync(realEstateId, createWasteBagsDto);
         return Created($"api/realEstate/{realEstateId}/wasteBags/{newWasteBags}", null);
     }
 }

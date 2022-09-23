@@ -2,13 +2,15 @@
 
 public class WasteBagsService : IWasteBagsService
 {
-    private readonly IWasteBagsRepository wasteRepository;
+    private readonly IWasteBagsRepository wasteBagsRepository;
     private readonly IRealEstateRepository realEstateRepository;
     private readonly IMapper mapper;
 
-    public WasteBagsService(IWasteBagsRepository wasteRepository, IRealEstateRepository realEstateRepository, IMapper mapper)
+    public WasteBagsService(IWasteBagsRepository wasteBagsRepository,
+                            IRealEstateRepository realEstateRepository,
+                            IMapper mapper)
     {
-        this.wasteRepository = wasteRepository;
+        this.wasteBagsRepository = wasteBagsRepository;
         this.realEstateRepository = realEstateRepository;
         this.mapper = mapper;
     }
@@ -18,7 +20,7 @@ public class WasteBagsService : IWasteBagsService
         if (realEstate == null) throw new NotFoundException("Real estate not found");
         var wasteBags = mapper.Map<WasteBag>(createWasteBagsDto);
         wasteBags.RealEstateId = realEstateId;
-        await wasteRepository.AddAsync(wasteBags);
+        await wasteBagsRepository.AddAsync(wasteBags);
         return wasteBags.Id;
     }
 }
