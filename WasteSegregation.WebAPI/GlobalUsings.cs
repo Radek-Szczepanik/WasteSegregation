@@ -20,3 +20,7 @@ global using Microsoft.AspNetCore.Http;
 global using Microsoft.Extensions.Logging;
 global using WasteSegregation.WebAPI.Middleware;
 global using WasteSegregation.Application.Exceptions;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using Microsoft.IdentityModel.Tokens;
+global using System.Text;
+global using System.Text.Json.Serialization;
