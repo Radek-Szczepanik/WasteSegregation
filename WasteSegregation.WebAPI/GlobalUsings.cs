@@ -24,3 +24,8 @@ global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.IdentityModel.Tokens;
 global using System.Text;
 global using System.Text.Json.Serialization;
+global using Microsoft.AspNetCore.Identity;
+global using WasteSegregation.Infrastructure.Identity;
+global using System.Linq;
+global using WasteSegregation.WebAPI.Models;
+global using WasteSegregation.WebAPI.Wrappers;

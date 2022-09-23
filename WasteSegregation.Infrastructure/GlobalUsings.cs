@@ -6,3 +6,6 @@ global using WasteSegregation.Infrastructure.Data;
 global using System.Threading.Tasks;
 global using WasteSegregation.Domain.Interfaces;
 global using WasteSegregation.Domain.Common;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+global using WasteSegregation.Infrastructure.Identity;

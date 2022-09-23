@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Identity;
+using WasteSegregation.Infrastructure.Identity;
+
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
 
@@ -26,6 +29,10 @@ try
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
         };
     });
+
+    builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+        .AddEntityFrameworkStores<WasteSegregationDbContext>()
+        .AddDefaultTokenProviders();
 
 
     builder.Services.AddControllers().AddJsonOptions(x =>

@@ -1,6 +1,6 @@
 ﻿namespace WasteSegregation.Infrastructure.Data;
 
-public class WasteSegregationDbContext : DbContext
+public class WasteSegregationDbContext : IdentityDbContext<ApplicationUser>
 {
 	public WasteSegregationDbContext(DbContextOptions<WasteSegregationDbContext> options) : base(options)
 	{
