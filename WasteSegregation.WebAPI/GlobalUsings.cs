@@ -29,3 +29,6 @@ global using WasteSegregation.Infrastructure.Identity;
 global using System.Linq;
 global using WasteSegregation.WebAPI.Models;
 global using WasteSegregation.WebAPI.Wrappers;
+global using System.Collections.Generic;
+global using System.IdentityModel.Tokens.Jwt;
+global using System.Security.Claims;

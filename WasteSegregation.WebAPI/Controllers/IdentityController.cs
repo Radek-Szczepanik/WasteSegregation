@@ -47,4 +47,43 @@ public class IdentityController : ControllerBase
 
         return Ok(new Response<bool> { Succeeded = true, Message = "User created successfully!" });
     }
+
+    [HttpPost]
+    [Route("Login")]
+    public async Task<IActionResult> Login(LoginModel login)
+    {
+        var user = await userManager.FindByEmailAsync(login.Email);
+        if (user != null && await userManager.CheckPasswordAsync(user, login.Password))
+        {
+            var authClaims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            };
+
+            var userRoles = await userManager.GetRolesAsync(user);
+            foreach (var userRole in userRoles)
+            {
+                authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+            }
+
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]));
+
+            var token = new JwtSecurityToken(
+                expires: DateTime.Now.AddHours(2),
+                claims: authClaims,
+                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+                );
+
+            return Ok(new
+            {
+                token = new JwtSecurityTokenHandler().WriteToken(token),
+                expiration = token.ValidTo
+            });
+
+        }
+
+        return Unauthorized();
+    }
 }
