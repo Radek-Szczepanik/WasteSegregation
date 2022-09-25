@@ -25,9 +25,10 @@ public class RealEstateService : IRealEstateService
         return mapper.Map<RealEstateDto>(realEstate);
     }
 
-    public async Task<RealEstateDto> AddAsync(CreateRealEstateDto createRealEstate)
+    public async Task<RealEstateDto> AddAsync(CreateRealEstateDto createRealEstate, string userId)
     {
         var realEstate = mapper.Map<RealEstate>(createRealEstate);
+        realEstate.UserId = userId;
         var result = await realEstateRepository.AddAsync(realEstate);
         return mapper.Map<RealEstateDto>(result);
     }

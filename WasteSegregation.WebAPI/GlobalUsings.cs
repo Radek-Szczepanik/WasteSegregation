@@ -32,3 +32,7 @@ global using WasteSegregation.WebAPI.Wrappers;
 global using System.Collections.Generic;
 global using System.IdentityModel.Tokens.Jwt;
 global using System.Security.Claims;
+global using Microsoft.OpenApi.Models;
+global using Microsoft.AspNetCore.Authorization;
+global using System.IO;
+global using System.Reflection;

@@ -1,5 +1,6 @@
 ﻿namespace WasteSegregation.WebAPI.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class RealEstatesController : ControllerBase
@@ -29,7 +30,7 @@ public class RealEstatesController : ControllerBase
     [HttpPost]
 	public async Task<IActionResult> Create([FromBody] CreateRealEstateDto createRealEstateDto)
 	{
-		var newRealEstate = await realEstateService.AddAsync(createRealEstateDto);
+		var newRealEstate = await realEstateService.AddAsync(createRealEstateDto, User.FindFirstValue(ClaimTypes.NameIdentifier));
 		return Created($"api/realEstates/{newRealEstate.Id}", null);
 	}
 

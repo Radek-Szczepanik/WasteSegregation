@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Identity;
-using WasteSegregation.Infrastructure.Identity;
-
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
 
@@ -12,8 +9,12 @@ try
 
     ConfigurationManager configuration = builder.Configuration;
 
-    builder.Services.AddSingleton(MappingsProfile.Initialize());
-
+    builder.Services.AddControllers();
+    builder.Services.AddScoped<ErrorHandlingMiddleware>();
+    builder.Services.AddAuthorization();
+    builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+                    .AddEntityFrameworkStores<WasteSegregationDbContext>()
+                    .AddDefaultTokenProviders();
     builder.Services.AddAuthentication(options =>
     {
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -29,43 +30,48 @@ try
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
         };
     });
-
-    builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-        .AddEntityFrameworkStores<WasteSegregationDbContext>()
-        .AddDefaultTokenProviders();
-
-
-    builder.Services.AddControllers().AddJsonOptions(x =>
-                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
-
-    builder.Logging.ClearProviders();
-    builder.Host.UseNLog();
-
-    builder.Services.AddScoped<WasteSegregationSeeder>();
-
+    builder.Services.AddScoped<IRealEstateService, RealEstateService>();
+    builder.Services.AddScoped<IRealEstateRepository, RealEstateRepository>();
+    builder.Services.AddScoped<IWasteBagsService, WasteBagsService>();
+    builder.Services.AddScoped<IWasteBagsRepository, WasteBagsRepository>();
+    builder.Services.AddSingleton(MappingsProfile.Initialize());
     builder.Services.AddDbContext<WasteSegregationDbContext>(options =>
         options.UseSqlServer(configuration.GetConnectionString("WasteSegregationDbConnection"),
         x => x.MigrationsAssembly("WasteSegregation.WebAPI")));
-
-    builder.Services.AddScoped<IRealEstateService, RealEstateService>();
-
-    builder.Services.AddScoped<IRealEstateRepository, RealEstateRepository>();
-
-    builder.Services.AddScoped<IWasteBagsService, WasteBagsService>();
-
-    builder.Services.AddScoped<IWasteBagsRepository, WasteBagsRepository>();
-
-    builder.Services.AddScoped<ErrorHandlingMiddleware>();
-
     builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen(c =>
+    {
+        c.EnableAnnotations();
 
-    builder.Services.AddSwaggerGen();
+        var securityScheme = new OpenApiSecurityScheme
+        {
+            Name = "JWT Authentication",
+            Description = "Enter JWT Bearer token",
+            In = ParameterLocation.Header,
+            Type = SecuritySchemeType.Http,
+            Scheme = "bearer",
+            BearerFormat = "JWT",
+            Reference = new OpenApiReference
+            {
+                Id = JwtBearerDefaults.AuthenticationScheme,
+                Type = ReferenceType.SecurityScheme
+            }
+        };
+        c.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
+        c.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
+            {securityScheme, new string[] {} }
+        });
+    });
+    builder.Logging.ClearProviders();
+    builder.Host.UseNLog();
+    builder.Services.AddScoped<WasteSegregationSeeder>();
+
+    // Configure the HTTP request pipeline.
 
     var app = builder.Build();
     var scope = app.Services.CreateScope();
     var seeder = scope.ServiceProvider.GetRequiredService<WasteSegregationSeeder>();
-
-    // Configure the HTTP request pipeline.
 
     seeder.Seed();
 
@@ -75,13 +81,10 @@ try
         app.UseSwaggerUI();
     }
     app.UseMiddleware<ErrorHandlingMiddleware>();
-
     app.UseHttpsRedirection();
-
+    app.UseAuthentication();
     app.UseAuthorization();
-
     app.MapControllers();
-
     app.Run();
 }
 catch (Exception exception)

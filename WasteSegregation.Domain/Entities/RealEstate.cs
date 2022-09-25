@@ -7,6 +7,7 @@ public class RealEstate : AuditableEntity
     public string StreetNumber { get; set; }
     public string PostCode { get; set; }
     public string City { get; set; }
+    public string UserId { get; set; }
 
     public virtual List<WasteBag> WasteBags { get; set; }
 }
