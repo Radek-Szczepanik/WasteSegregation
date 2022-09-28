@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WasteSegregation.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using WasteSegregation.Infrastructure.Data;
 namespace WasteSegregation.WebAPI.Migrations
 {
     [DbContext(typeof(WasteSegregationDbContext))]
-    partial class WasteSegregationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220927200130_AddColumnUserIdToWasteBagsTable")]
+    partial class AddColumnUserIdToWasteBagsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

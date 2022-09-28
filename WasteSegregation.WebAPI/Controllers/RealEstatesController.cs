@@ -38,6 +38,16 @@ public class RealEstatesController : ControllerBase
 	[Route("{id}")]
 	public async Task<IActionResult> Update([FromBody] UpdateRealEstateDto updateRealEstateDto, [FromRoute] int id)
 	{
+		var userOwnsRealEstate = await realEstateService.UserOwnsRealEstateAsync(id, User.FindFirstValue(ClaimTypes.NameIdentifier));
+		if (!userOwnsRealEstate)
+		{
+			return BadRequest(new Response<bool>()
+			{
+				Succeeded = false,
+				Message = "You did not create this real estate"
+			});
+		}
+
 		await realEstateService.UpdateAsync(updateRealEstateDto, id);
 		return NoContent();
 	}
@@ -46,7 +56,16 @@ public class RealEstatesController : ControllerBase
 	[Route("{id}")]
 	public async Task<IActionResult> Delete([FromRoute] int id)
 	{
-		await realEstateService.DeleteAsync(id);
+        var userOwnsRealEstate = await realEstateService.UserOwnsRealEstateAsync(id, User.FindFirstValue(ClaimTypes.NameIdentifier));
+        if (!userOwnsRealEstate)
+        {
+            return BadRequest(new Response<bool>()
+            {
+                Succeeded = false,
+                Message = "You did not create this real estate"
+            });
+        }
+        await realEstateService.DeleteAsync(id);
 		return NoContent();
 	}
 }

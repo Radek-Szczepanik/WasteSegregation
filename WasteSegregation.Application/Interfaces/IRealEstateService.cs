@@ -7,4 +7,5 @@ public interface IRealEstateService
     Task<RealEstateDto> AddAsync(CreateRealEstateDto createRealEstate, string userId);
     Task UpdateAsync(UpdateRealEstateDto updateRealEstate, int id);
     Task DeleteAsync(int id);
+    Task<bool> UserOwnsRealEstateAsync(int realEstateId, string userId);
 }

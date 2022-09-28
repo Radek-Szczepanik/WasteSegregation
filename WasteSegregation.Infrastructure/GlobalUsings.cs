@@ -9,3 +9,4 @@ global using WasteSegregation.Domain.Common;
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 global using WasteSegregation.Infrastructure.Identity;
+global using WasteSegregation.Application.Services;

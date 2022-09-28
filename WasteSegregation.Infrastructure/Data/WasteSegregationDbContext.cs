@@ -2,8 +2,12 @@
 
 public class WasteSegregationDbContext : IdentityDbContext<ApplicationUser>
 {
-	public WasteSegregationDbContext(DbContextOptions<WasteSegregationDbContext> options) : base(options)
+	private readonly UserResolverService userResolverService;
+
+	public WasteSegregationDbContext(DbContextOptions<WasteSegregationDbContext> options,
+									 UserResolverService userResolverService) : base(options)
 	{
+		this.userResolverService = userResolverService;
 	}
 
 	public DbSet<RealEstate> RealEstates { get; set; }
@@ -19,12 +23,12 @@ public class WasteSegregationDbContext : IdentityDbContext<ApplicationUser>
 		foreach (var entityEntry in entries)
 		{
 			((AuditableEntity)entityEntry.Entity).LastModified = System.DateTime.UtcNow;
-			//((AuditableEntity)entityEntry.Entity).LastModifiedBy = 
+			((AuditableEntity)entityEntry.Entity).LastModifiedBy = userResolverService.GetUser();
 
 			if (entityEntry.State == EntityState.Added)
 			{
 				((AuditableEntity)entityEntry.Entity).Created = System.DateTime.UtcNow;
-                //((AuditableEntity)entityEntry.Entity).LastModifiedBy = 
+                ((AuditableEntity)entityEntry.Entity).CreatedBy = userResolverService.GetUser();
             }
         }
 		return await base.SaveChangesAsync();

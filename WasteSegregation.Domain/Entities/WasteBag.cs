@@ -9,6 +9,8 @@ public class WasteBag
     public byte? BrownBag { get; set; }
     public DateTime? ReceiptDate { get; set; }
 
+    public string UserId { get; set; }
+
     public int RealEstateId { get; set; }
     public virtual RealEstate RealEstate { get; set; }
 }

@@ -12,6 +12,7 @@ try
     builder.Services.AddControllers();
     builder.Services.AddScoped<ErrorHandlingMiddleware>();
     builder.Services.AddAuthorization();
+    builder.Services.AddTransient<UserResolverService>();
     builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                     .AddEntityFrameworkStores<WasteSegregationDbContext>()
                     .AddDefaultTokenProviders();

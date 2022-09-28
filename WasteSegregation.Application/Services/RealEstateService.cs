@@ -47,4 +47,20 @@ public class RealEstateService : IRealEstateService
         if (realEstate == null) throw new NotFoundException("Real estate not found");
         await realEstateRepository.DeleteAsync(realEstate);
     }
+
+    public async Task<bool> UserOwnsRealEstateAsync(int realEstateId, string userId)
+    {
+        var realEstate = await realEstateRepository.GetByIdAsync(realEstateId);
+        if (realEstate == null)
+        {
+            return false;
+        }
+
+        if (realEstate.UserId != userId)
+        {
+            return false;
+        }
+
+        return true;
+    }
 }
