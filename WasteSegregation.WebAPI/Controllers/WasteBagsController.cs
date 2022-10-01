@@ -6,18 +6,24 @@
 public class WasteBagsController : ControllerBase
 {
     private readonly IWasteBagsService wasteBagsService;
+    private readonly ICreatedByUserService createdByUserService;
 
-    public WasteBagsController(IWasteBagsService wasteBagsService)
+    public WasteBagsController(IWasteBagsService wasteBagsService, ICreatedByUserService createdByUserService)
     {
         this.wasteBagsService = wasteBagsService;
+        this.createdByUserService = createdByUserService;
     }
 
+    [Authorize(Roles = UserRoles.User)]
     [HttpPost]
     public async Task<IActionResult> Create([FromRoute] int realEstateId, [FromBody] CreateWasteBagsDto createWasteBagsDto)
     {
-        var userOwnsRealEstate = await wasteBagsService.RealEstateWasteBagsAsync(realEstateId,
-                                                                                 User.FindFirstValue(ClaimTypes.NameIdentifier));
-        if (!userOwnsRealEstate)
+        var isUserCreated = await createdByUserService.IsUserCreatedAsync(realEstateId,
+                                                                          User.FindFirstValue(ClaimTypes.NameIdentifier));
+        var newWasteBags = await wasteBagsService.AddAsync(realEstateId,
+                                                           createWasteBagsDto,
+                                                           User.FindFirstValue(ClaimTypes.NameIdentifier));
+        if (!isUserCreated)
         {
             return BadRequest(new Response<bool>()
             {
@@ -26,9 +32,6 @@ public class WasteBagsController : ControllerBase
             });
         }
         
-        var newWasteBags = await wasteBagsService.AddAsync(realEstateId,
-                                                           createWasteBagsDto,
-                                                           User.FindFirstValue(ClaimTypes.NameIdentifier));
         return Created($"api/realEstate/{realEstateId}/wasteBags/{newWasteBags}", null);
     }
 }

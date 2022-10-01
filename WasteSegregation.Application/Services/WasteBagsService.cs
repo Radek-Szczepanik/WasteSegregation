@@ -24,20 +24,4 @@ public class WasteBagsService : IWasteBagsService
         await wasteBagsRepository.AddAsync(wasteBags);
         return wasteBags.Id;
     }
-
-    public async Task<bool> RealEstateWasteBagsAsync(int realEstateId, string UserId)
-    {
-        var realEstate = await realEstateRepository.GetByIdAsync(realEstateId);
-        if (realEstate == null)
-        {
-            return false;
-        }
-
-        if (realEstate.UserId != UserId)
-        {
-            return false;
-        }
-
-        return true;
-    }
 }

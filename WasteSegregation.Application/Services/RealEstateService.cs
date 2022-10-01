@@ -4,7 +4,7 @@ public class RealEstateService : IRealEstateService
 {
     private readonly IRealEstateRepository realEstateRepository;
     private readonly IMapper mapper;
-    
+
     public RealEstateService(IRealEstateRepository realEstateRepository, IMapper mapper)
     {
         this.realEstateRepository = realEstateRepository;
@@ -46,21 +46,5 @@ public class RealEstateService : IRealEstateService
         var realEstate = await realEstateRepository.GetByIdAsync(id);
         if (realEstate == null) throw new NotFoundException("Real estate not found");
         await realEstateRepository.DeleteAsync(realEstate);
-    }
-
-    public async Task<bool> UserOwnsRealEstateAsync(int realEstateId, string userId)
-    {
-        var realEstate = await realEstateRepository.GetByIdAsync(realEstateId);
-        if (realEstate == null)
-        {
-            return false;
-        }
-
-        if (realEstate.UserId != userId)
-        {
-            return false;
-        }
-
-        return true;
     }
 }

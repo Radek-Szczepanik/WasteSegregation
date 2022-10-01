@@ -35,6 +35,7 @@ try
     builder.Services.AddScoped<IRealEstateRepository, RealEstateRepository>();
     builder.Services.AddScoped<IWasteBagsService, WasteBagsService>();
     builder.Services.AddScoped<IWasteBagsRepository, WasteBagsRepository>();
+    builder.Services.AddScoped<ICreatedByUserService, CreatedByUserService>();
     builder.Services.AddSingleton(MappingsProfile.Initialize());
     builder.Services.AddDbContext<WasteSegregationDbContext>(options =>
         options.UseSqlServer(configuration.GetConnectionString("WasteSegregationDbConnection"),
