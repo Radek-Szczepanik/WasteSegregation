@@ -10,6 +10,13 @@ try
     ConfigurationManager configuration = builder.Configuration;
 
     builder.Services.AddControllers();
+#pragma warning disable CS0618 // Type or member is obsolete
+    builder.Services.AddFluentValidation(options =>
+    {
+        options.RegisterValidatorsFromAssemblyContaining<CreateRealEstateDtoValidator>();
+
+    });
+#pragma warning restore CS0618 // Type or member is obsolete
     builder.Services.AddScoped<ErrorHandlingMiddleware>();
     builder.Services.AddAuthorization();
     builder.Services.AddTransient<UserResolverService>();

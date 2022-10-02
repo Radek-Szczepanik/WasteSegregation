@@ -1,4 +1,6 @@
-﻿namespace WasteSegregation.WebAPI.Controllers;
+﻿using WasteSegregation.WebAPI.Attributes;
+
+namespace WasteSegregation.WebAPI.Controllers;
 
 [Authorize]
 [ApiController]
@@ -32,16 +34,13 @@ public class RealEstatesController : ControllerBase
         var realEstate = await realEstateService.GetByIdAsync(id);
         if (!isAdmin && !isUserCreated)
         {
-            return BadRequest(new Response<bool>()
-            {
-                Succeeded = false,
-                Message = "You did not create this real estate"
-            });
+			return BadRequest(new Response(false, "You did not create this real estate"));
         }
         
         return Ok(realEstate);
     }
 
+    [ValidateFilters]
     [Authorize(Roles = UserRoles.User)]
     [HttpPost]
 	public async Task<IActionResult> Create([FromBody] CreateRealEstateDto createRealEstateDto)
@@ -59,12 +58,8 @@ public class RealEstatesController : ControllerBase
         await realEstateService.UpdateAsync(updateRealEstateDto, id);
         if (!isUserCreated)
 		{
-			return BadRequest(new Response<bool>()
-			{
-				Succeeded = false,
-				Message = "You did not create this real estate"
-			});
-		}
+            return BadRequest(new Response(false, "You did not create this real estate"));
+        }
 
 		return NoContent();
 	}
@@ -78,11 +73,7 @@ public class RealEstatesController : ControllerBase
         await realEstateService.DeleteAsync(id);
         if (!isUserCreated)
         {
-            return BadRequest(new Response<bool>()
-            {
-                Succeeded = false,
-                Message = "You did not create this real estate"
-            });
+            return BadRequest(new Response(false, "You did not create this real estate"));
         }
         
 		return NoContent();

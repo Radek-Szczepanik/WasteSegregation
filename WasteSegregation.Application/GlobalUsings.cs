@@ -8,3 +8,4 @@ global using WasteSegregation.Application.Interfaces;
 global using WasteSegregation.Domain.Entities;
 global using WasteSegregation.Domain.Interfaces;
 global using Microsoft.AspNetCore.Http;
+global using FluentValidation;

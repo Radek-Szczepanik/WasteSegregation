@@ -14,6 +14,7 @@ public class WasteBagsController : ControllerBase
         this.createdByUserService = createdByUserService;
     }
 
+    [ValidateFilters]
     [Authorize(Roles = UserRoles.User)]
     [HttpPost]
     public async Task<IActionResult> Create([FromRoute] int realEstateId, [FromBody] CreateWasteBagsDto createWasteBagsDto)
@@ -25,11 +26,7 @@ public class WasteBagsController : ControllerBase
                                                            User.FindFirstValue(ClaimTypes.NameIdentifier));
         if (!isUserCreated)
         {
-            return BadRequest(new Response<bool>()
-            {
-                Succeeded = false,
-                Message = "You did not create this real estate. You can not add waste bags."
-            });
+            return BadRequest(new Response(false, "You did not create this real estate. You can not add waste bags."));
         }
         
         return Created($"api/realEstate/{realEstateId}/wasteBags/{newWasteBags}", null);
