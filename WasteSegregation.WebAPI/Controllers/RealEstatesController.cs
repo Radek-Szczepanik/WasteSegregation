@@ -1,6 +1,4 @@
-﻿using WasteSegregation.WebAPI.Attributes;
-
-namespace WasteSegregation.WebAPI.Controllers;
+﻿namespace WasteSegregation.WebAPI.Controllers;
 
 [Authorize]
 [ApiController]
@@ -18,10 +16,12 @@ public class RealEstatesController : ControllerBase
 
     [Authorize(Roles = UserRoles.Admin)]
     [HttpGet]
-	public async Task<IActionResult> GetAll()
+	public async Task<IActionResult> GetAll([FromQuery] PaginationFilter paginationFilter)
 	{
-		var realEstates = await realEstateService.GetAllAsync();
-		return Ok(realEstates);
+        var validPaginationFilter = new PaginationFilter(paginationFilter.PageNumber, paginationFilter.PageSize);
+		var realEstates = await realEstateService.GetAllAsync(validPaginationFilter.PageNumber, validPaginationFilter.PageSize);
+        var totalRecords = await realEstateService.GetAllRealEstatesCountAsync();
+        return Ok(PaginationHelper.CreatePageResponse(realEstates, validPaginationFilter, totalRecords));
 	}
 
     [Authorize(Roles = UserRoles.AdminOrUser)]

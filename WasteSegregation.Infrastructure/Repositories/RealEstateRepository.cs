@@ -9,9 +9,11 @@ public class RealEstateRepository : IRealEstateRepository
         this.dbContext = dbContext;
     }
 
-    public async Task<IEnumerable<RealEstate>> GetAllAsync()
+    public async Task<IEnumerable<RealEstate>> GetAllAsync(int pageNumber, int pageSize)
         => await dbContext
             .RealEstates
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
             .Include(x => x.WasteBags)
             .ToListAsync();
          
@@ -40,5 +42,10 @@ public class RealEstateRepository : IRealEstateRepository
         dbContext.RealEstates.Remove(realEstate);
         await dbContext.SaveChangesAsync();
         await Task.CompletedTask;
+    }
+
+    public async Task<int> GetAllCountAsync()
+    {
+        return await dbContext.RealEstates.CountAsync();
     }
 }

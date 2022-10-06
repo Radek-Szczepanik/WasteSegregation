@@ -38,3 +38,5 @@ global using WasteSegregation.WebAPI.Models;
 global using WasteSegregation.WebAPI.Wrappers;
 global using Microsoft.AspNetCore.Mvc.Filters;
 global using WasteSegregation.WebAPI.Attributes;
+global using WasteSegregation.WebAPI.Filters;
+global using WasteSegregation.WebAPI.Helpers;
