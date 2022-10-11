@@ -10,3 +10,6 @@ global using Microsoft.AspNetCore.Identity;
 global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 global using WasteSegregation.Infrastructure.Identity;
 global using WasteSegregation.Application.Services;
+global using System.Linq.Expressions;
+global using System;
+global using WasteSegregation.Infrastructure.ExtensionMethods;

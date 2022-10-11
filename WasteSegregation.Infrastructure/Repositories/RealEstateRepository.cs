@@ -9,9 +9,10 @@ public class RealEstateRepository : IRealEstateRepository
         this.dbContext = dbContext;
     }
 
-    public async Task<IEnumerable<RealEstate>> GetAllAsync(int pageNumber, int pageSize)
+    public async Task<IEnumerable<RealEstate>> GetAllAsync(int pageNumber, int pageSize, string sortField, bool ascending)
         => await dbContext
             .RealEstates
+            .OrderByPropertyName(sortField, ascending)
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
             .Include(x => x.WasteBags)

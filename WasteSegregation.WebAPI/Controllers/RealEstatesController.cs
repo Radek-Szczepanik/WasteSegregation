@@ -16,10 +16,12 @@ public class RealEstatesController : ControllerBase
 
     [Authorize(Roles = UserRoles.Admin)]
     [HttpGet]
-	public async Task<IActionResult> GetAll([FromQuery] PaginationFilter paginationFilter)
+	public async Task<IActionResult> GetAll([FromQuery] PaginationFilter paginationFilter, [FromQuery] SortingFilter sortingFilter)
 	{
         var validPaginationFilter = new PaginationFilter(paginationFilter.PageNumber, paginationFilter.PageSize);
-		var realEstates = await realEstateService.GetAllAsync(validPaginationFilter.PageNumber, validPaginationFilter.PageSize);
+        var validSortingFilter = new SortingFilter(sortingFilter.SortField, sortingFilter.Ascending);
+		var realEstates = await realEstateService.GetAllAsync(validPaginationFilter.PageNumber, validPaginationFilter.PageSize,
+                                                               validSortingFilter.SortField, validSortingFilter.Ascending);
         var totalRecords = await realEstateService.GetAllRealEstatesCountAsync();
         return Ok(PaginationHelper.CreatePageResponse(realEstates, validPaginationFilter, totalRecords));
 	}
@@ -78,4 +80,11 @@ public class RealEstatesController : ControllerBase
         
 		return NoContent();
 	}
+
+    [AllowAnonymous]
+    [HttpGet("[action]")]
+    public IActionResult GetSortFields()
+    {
+        return Ok(SortingHelper.GetSortFields().Select(x => x.Key));
+    }
 }

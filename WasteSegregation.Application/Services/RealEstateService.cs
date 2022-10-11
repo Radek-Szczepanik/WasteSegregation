@@ -11,9 +11,9 @@ public class RealEstateService : IRealEstateService
         this.mapper = mapper;
     }
 
-    public async Task<IEnumerable<RealEstateDto>> GetAllAsync(int pageNumber, int pageSize)
+    public async Task<IEnumerable<RealEstateDto>> GetAllAsync(int pageNumber, int pageSize, string sortField, bool ascending)
     {
-        var realEstate = await realEstateRepository.GetAllAsync(pageNumber, pageSize);
+        var realEstate = await realEstateRepository.GetAllAsync(pageNumber, pageSize, sortField, ascending);
         if (realEstate == null) throw new NotFoundException("Real estates not found");
         return mapper.Map<List<RealEstateDto>>(realEstate);
     }

@@ -2,7 +2,7 @@
 
 public interface IRealEstateService
 {
-    Task<IEnumerable<RealEstateDto>> GetAllAsync(int pageNumber, int pageSize);
+    Task<IEnumerable<RealEstateDto>> GetAllAsync(int pageNumber, int pageSize, string sortField, bool ascending);
     Task<int> GetAllRealEstatesCountAsync();
     Task<RealEstateDto> GetByIdAsync(int id);
     Task<RealEstateDto> AddAsync(CreateRealEstateDto createRealEstate, string userId);
