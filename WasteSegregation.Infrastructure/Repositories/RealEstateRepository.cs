@@ -9,13 +9,15 @@ public class RealEstateRepository : IRealEstateRepository
         this.dbContext = dbContext;
     }
 
-    public async Task<IEnumerable<RealEstate>> GetAllAsync(int pageNumber, int pageSize, string sortField, bool ascending)
+    public async Task<IEnumerable<RealEstate>> GetAllAsync(int pageNumber, int pageSize, string sortField,
+                                                           bool ascending, string filterBy)
         => await dbContext
             .RealEstates
+            .Where(s => s.Street.ToLower().Contains(filterBy.ToLower()))
+            .Include(x => x.WasteBags)
             .OrderByPropertyName(sortField, ascending)
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
-            .Include(x => x.WasteBags)
             .ToListAsync();
          
     public async Task<RealEstate> GetByIdAsync(int id)
@@ -45,8 +47,8 @@ public class RealEstateRepository : IRealEstateRepository
         await Task.CompletedTask;
     }
 
-    public async Task<int> GetAllCountAsync()
+    public async Task<int> GetAllCountAsync(string filterBy)
     {
-        return await dbContext.RealEstates.CountAsync();
+        return await dbContext.RealEstates.Where(s => s.Street.ToLower().Contains(filterBy.ToLower())).CountAsync();
     }
 }

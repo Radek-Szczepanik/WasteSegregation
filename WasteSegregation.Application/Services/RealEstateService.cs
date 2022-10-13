@@ -11,9 +11,10 @@ public class RealEstateService : IRealEstateService
         this.mapper = mapper;
     }
 
-    public async Task<IEnumerable<RealEstateDto>> GetAllAsync(int pageNumber, int pageSize, string sortField, bool ascending)
+    public async Task<IEnumerable<RealEstateDto>> GetAllAsync(int pageNumber, int pageSize, string sortField,
+                                                              bool ascending, string filterBy)
     {
-        var realEstate = await realEstateRepository.GetAllAsync(pageNumber, pageSize, sortField, ascending);
+        var realEstate = await realEstateRepository.GetAllAsync(pageNumber, pageSize, sortField, ascending, filterBy);
         if (realEstate == null) throw new NotFoundException("Real estates not found");
         return mapper.Map<List<RealEstateDto>>(realEstate);
     }
@@ -48,8 +49,8 @@ public class RealEstateService : IRealEstateService
         await realEstateRepository.DeleteAsync(realEstate);
     }
 
-    public async Task<int> GetAllRealEstatesCountAsync()
+    public async Task<int> GetAllRealEstatesCountAsync(string filterBy)
     {
-        return await realEstateRepository.GetAllCountAsync();
+        return await realEstateRepository.GetAllCountAsync(filterBy);
     }
 }

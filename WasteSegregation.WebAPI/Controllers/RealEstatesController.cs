@@ -16,13 +16,15 @@ public class RealEstatesController : ControllerBase
 
     [Authorize(Roles = UserRoles.Admin)]
     [HttpGet]
-	public async Task<IActionResult> GetAll([FromQuery] PaginationFilter paginationFilter, [FromQuery] SortingFilter sortingFilter)
+	public async Task<IActionResult> GetAll([FromQuery] PaginationFilter paginationFilter,
+                                            [FromQuery] SortingFilter sortingFilter,
+                                            [FromQuery] string filterBy = "")
 	{
         var validPaginationFilter = new PaginationFilter(paginationFilter.PageNumber, paginationFilter.PageSize);
         var validSortingFilter = new SortingFilter(sortingFilter.SortField, sortingFilter.Ascending);
 		var realEstates = await realEstateService.GetAllAsync(validPaginationFilter.PageNumber, validPaginationFilter.PageSize,
-                                                               validSortingFilter.SortField, validSortingFilter.Ascending);
-        var totalRecords = await realEstateService.GetAllRealEstatesCountAsync();
+                                                              validSortingFilter.SortField, validSortingFilter.Ascending, filterBy);
+        var totalRecords = await realEstateService.GetAllRealEstatesCountAsync(filterBy);
         return Ok(PaginationHelper.CreatePageResponse(realEstates, validPaginationFilter, totalRecords));
 	}
 
