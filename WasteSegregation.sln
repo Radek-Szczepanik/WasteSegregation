@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WasteSegregation.Infrastruc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WasteSegregation.WebAPI", "WasteSegregation.WebAPI\WasteSegregation.WebAPI.csproj", "{75ADD8FE-A7CF-494D-84C6-C4B8547D1F7A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D5A742E2-760B-4CBF-9803-90A256D4DB89}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{347099A2-049C-43E4-A818-859B8390D2F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{9D6A584D-30E8-4F92-A92E-4EBE7F725722}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +39,10 @@ Global
 		{75ADD8FE-A7CF-494D-84C6-C4B8547D1F7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75ADD8FE-A7CF-494D-84C6-C4B8547D1F7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75ADD8FE-A7CF-494D-84C6-C4B8547D1F7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D6A584D-30E8-4F92-A92E-4EBE7F725722}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D6A584D-30E8-4F92-A92E-4EBE7F725722}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D6A584D-30E8-4F92-A92E-4EBE7F725722}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D6A584D-30E8-4F92-A92E-4EBE7F725722}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{66CF78E0-5FE7-43D9-A576-6B0B0805515B} = {8038DEC2-95EF-4228-A28A-CE7FC4385984}
 		{87A880E6-F15F-44A2-930F-DA403B6A42B0} = {8038DEC2-95EF-4228-A28A-CE7FC4385984}
 		{75ADD8FE-A7CF-494D-84C6-C4B8547D1F7A} = {8038DEC2-95EF-4228-A28A-CE7FC4385984}
+		{9D6A584D-30E8-4F92-A92E-4EBE7F725722} = {347099A2-049C-43E4-A818-859B8390D2F5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DAAD48BA-2B68-41F9-9B4C-F7994D9291ED}
