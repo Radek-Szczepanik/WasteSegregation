@@ -6,4 +6,4 @@ global using Moq;
 global using WasteSegregation.Domain.Interfaces;
 global using WasteSegregation.Application.Dto;
 global using WasteSegregation.Domain.Entities;
-
+global using FluentAssertions;

@@ -1,6 +1,6 @@
 ﻿namespace WasteSegregation.WebAPI.Controllers;
 
-[Authorize]
+[AllowAnonymous]
 [ApiController]
 [Route("api/[controller]")]
 public class RealEstatesController : ControllerBase

@@ -1,6 +1,4 @@
-﻿using FluentAssertions;
-
-namespace UnitTests.Services;
+﻿namespace UnitTests.Services;
 
 public class RealEstateServiceTests
 {
@@ -37,7 +35,7 @@ public class RealEstateServiceTests
     }
 
     [Fact]
-    public async Task when_invoking_get_real_estate_should_invoke_get_real_estate_repository()
+    public async Task when_invoking_get_real_estate_by_id_should_invoke_get_real_estate_by_id_repository()
     {
         // Arrange
         var realEstateRepositoryMock = new Mock<IRealEstateRepository>();
