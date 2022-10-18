@@ -1,6 +1,20 @@
-global using Xunit;
-global using Microsoft.AspNetCore.Mvc.Testing;
-global using Microsoft.VisualStudio.TestPlatform.TestHost;
 global using FluentAssertions;
-global using System.Threading.Tasks;
+global using Microsoft.AspNetCore.Mvc.Testing;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.DependencyInjection;
+global using System.Linq;
 global using System.Net;
+global using System.Net.Http;
+global using System.Threading.Tasks;
+global using WasteSegregation.Infrastructure.Data;
+global using Xunit;
+global using Microsoft.AspNetCore.Authentication;
+global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.Authorization.Policy;
+global using Microsoft.AspNetCore.Http;
+global using System.Security.Claims;
+global using Microsoft.AspNetCore.Mvc.Filters;
+global using Newtonsoft.Json;
+global using System.Text;
+global using WasteSegregation.Application.Dto;
+
