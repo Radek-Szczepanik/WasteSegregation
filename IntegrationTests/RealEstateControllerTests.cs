@@ -1,16 +1,21 @@
-﻿namespace IntegrationTests;
+﻿using IntegrationTests.Helpers;
+using WasteSegregation.Domain.Entities;
+
+namespace IntegrationTests;
 
 public class RealEstateControllerTests : IClassFixture<WebApplicationFactory<Program>>
 {
     private HttpClient client;
+    private WebApplicationFactory<Program> factory;
+
     public RealEstateControllerTests(WebApplicationFactory<Program> factory)
     {
-        this.client = factory
+        this.factory = factory
                 .WithWebHostBuilder(builder =>
                 {
                     builder.ConfigureServices(services =>
                     {
-                        var dbContextOptions = services.SingleOrDefault(service => 
+                        var dbContextOptions = services.SingleOrDefault(service =>
                             service.ServiceType == typeof(DbContextOptions<WasteSegregationDbContext>));
 
                         services.Remove(dbContextOptions);
@@ -21,12 +26,21 @@ public class RealEstateControllerTests : IClassFixture<WebApplicationFactory<Pro
 
                         services.AddDbContext<WasteSegregationDbContext>(options => options.UseInMemoryDatabase("InMemoryDb"));
                     });
-                })
-                .CreateClient();
+                });
+        this.client = this.factory.CreateClient();
+    }
+
+    private void SeedRealEstates(RealEstate realEstate)
+    {
+        var scopeFactory = this.factory.Services.GetService<IServiceScopeFactory>();
+        using var scope = scopeFactory.CreateScope();
+        var dbContext = scope.ServiceProvider.GetService<WasteSegregationDbContext>();
+        dbContext.RealEstates.Add(realEstate);
+        dbContext.SaveChanges();
     }
 
     [Fact]
-    public async Task CreateRealEstate_WithWalidModel_ReturnsCreatedStatus()
+    public async Task CreateRealEstate_WithValidModel_ReturnsCreatedStatus()
     {
         // Arrange
         var model = new CreateRealEstateDto()
@@ -37,9 +51,7 @@ public class RealEstateControllerTests : IClassFixture<WebApplicationFactory<Pro
             City = "TestCity"
         };
 
-        var jsonModel = JsonConvert.SerializeObject(model);
-
-        var httpContent = new StringContent(jsonModel, UnicodeEncoding.UTF8, "application/json");
+        var httpContent = model.ToJsonHttpContent();
 
         // Act
         var response = await this.client.PostAsync("/api/RealEstates", httpContent);
@@ -47,6 +59,78 @@ public class RealEstateControllerTests : IClassFixture<WebApplicationFactory<Pro
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Created);
         response.Headers.Should().NotBeNull();
+    }
+
+    [Fact]
+    public async Task Delete_ForRealEstateOwner_ReturnsNoContentStatus()
+    {
+        // Arrange
+        var realEstate = new RealEstate()
+        {
+            UserId = "1",
+            Street = "TestStreet"
+        };
+
+        SeedRealEstates(realEstate);
+
+        // Act
+        var response = await this.client.DeleteAsync("/api/RealEstates/" + realEstate.Id);
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+    }
+
+    [Fact]
+    public async Task Delete_ForNonRealEstateOwner_ReturnsBadRequestStatus()
+    {
+        // Arrange
+        var realEstate = new RealEstate()
+        {
+            UserId = "329",
+            Street = "TestStreet"
+        };
+
+        SeedRealEstates(realEstate);
+
+        // Act
+        var response = await this.client.DeleteAsync("/api/RealEstates/" + realEstate.Id);
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+    }
+
+    [Fact]
+    public async Task Delete_ForNonExistingRealEstate_ReturnsNotFoundStatus()
+    {
+        // Arrange
+
+
+        // Act
+        var response = await this.client.DeleteAsync("/api/RealEstates/555");
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+    }
+
+    [Fact]
+    public async Task CreateRealEstate_WithInvalidModel_ReturnsBadRequestStatus()
+    {
+        // Arrange
+        var model = new CreateRealEstateDto()
+        {
+            Street = "",
+            StreetNumber = "12345",
+            PostCode = "12-345",
+            City = "TestCity"
+        };
+
+        var httpContent = model.ToJsonHttpContent();
+
+        // Act
+        var response = await this.client.PostAsync("/api/RealEstates", httpContent);
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
 
     [Theory]

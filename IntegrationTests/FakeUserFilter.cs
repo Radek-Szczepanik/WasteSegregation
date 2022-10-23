@@ -8,7 +8,8 @@ public class FakeUserFilter : IAsyncActionFilter
         claimsPrincipal.AddIdentity(new ClaimsIdentity
         (new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, "1")
+                new Claim(ClaimTypes.NameIdentifier, "1"),
+                new Claim(ClaimTypes.Role, "Admin")
             }
         ));
 
