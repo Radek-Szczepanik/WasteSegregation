@@ -1,7 +1,4 @@
-﻿using IntegrationTests.Helpers;
-using WasteSegregation.Domain.Entities;
-
-namespace IntegrationTests;
+﻿namespace IntegrationTests;
 
 public class RealEstateControllerTests : IClassFixture<WebApplicationFactory<Program>>
 {

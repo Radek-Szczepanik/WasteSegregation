@@ -17,4 +17,7 @@ global using Microsoft.AspNetCore.Mvc.Filters;
 global using Newtonsoft.Json;
 global using System.Text;
 global using WasteSegregation.Application.Dto;
+global using IntegrationTests.Helpers;
+global using WasteSegregation.Domain.Entities;
+global using WasteSegregation.WebAPI.Models;
 
