@@ -13,6 +13,12 @@ public class WasteSegregationSeeder
     {
         if (dbContext.Database.CanConnect())
         {
+            var pendingMigrations = dbContext.Database.GetPendingMigrations();
+            if (pendingMigrations != null && pendingMigrations.Any())
+            {
+                dbContext.Database.Migrate();
+            }
+
             if (!dbContext.RealEstates.Any())
             {
                 var realEstates = GetRealEstates();
